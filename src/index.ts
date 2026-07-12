@@ -14,7 +14,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: 'Move & Groove API is running 🕺',
+    environment: ENV.NODE_ENV,
+  });
+});
+
+app.get('/api/health', (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: 'Move & Groove API is running 🕺',

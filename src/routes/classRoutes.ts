@@ -1,14 +1,21 @@
+import { Router, Router as ExpressRouter } from 'express';
+import {
+  getClasses,
+  getClassById,
+  createClass,
+  updateClass,
+  deleteClass,
+  getStyles,
+} from '../controllers/classController';
+import { protect } from '../middleware/auth';
 
-import { Router } from 'express';
+const router: ExpressRouter = Router();
 
-const router = Router();
-
-router.get('/', (req, res) => {
-  res.json({ message: 'Get all classes' });
-});
-
-router.get('/:id', (req, res) => {
-  res.json({ message: 'Get class by id' });
-});
+router.get('/', getClasses);
+router.get('/styles', getStyles);
+router.get('/:id', getClassById);
+router.post('/', protect, createClass);
+router.put('/:id', protect, updateClass);
+router.delete('/:id', protect, deleteClass);
 
 export default router;

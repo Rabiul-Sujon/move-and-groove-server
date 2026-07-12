@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../models/User';
 import { generateToken } from '../utils/jwt';
 import { AuthRequest } from '../middleware/auth';
-import { DEMO_USER } from '../utils/constants';
+import { DEMO_STUDENT } from '../utils/constants';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -94,15 +94,15 @@ export const login = async (req: Request, res: Response) => {
 
 export const demoLogin = async (req: Request, res: Response) => {
   try {
-    let user = await User.findOne({ email: DEMO_USER.email });
+    let user = await User.findOne({ email: DEMO_STUDENT.email });
 
     // Create demo user if doesn't exist
     if (!user) {
       user = await User.create({
-        name: DEMO_USER.name,
-        email: DEMO_USER.email,
-        password: DEMO_USER.password,
-        role: 'user',
+        name: DEMO_STUDENT.name,
+        email: DEMO_STUDENT.email,
+        password: DEMO_STUDENT.password,
+        role: 'student',
       });
     }
 

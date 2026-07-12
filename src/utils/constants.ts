@@ -14,10 +14,16 @@ export const SKILL_LEVELS = [
   { value: 'All Levels', label: 'All Levels' },
 ];
 
-export const DEMO_USER = {
-  name: 'Demo Dancer',
-  email: 'demo@moveandgroove.com',
-  password: 'demo1234',
+export const DEMO_STUDENT = {
+  name: 'Demo Student',
+  email: 'student@moveandgroove.com',
+  password: 'student1234',
+};
+
+export const DEMO_INSTRUCTOR = {
+  name: 'Demo Instructor',
+  email: 'instructor@moveandgroove.com',
+  password: 'instructor1234',
 };
 
 export const DEMO_ADMIN = {

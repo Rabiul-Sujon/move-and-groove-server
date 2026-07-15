@@ -1,28 +1,32 @@
 import mongoose from 'mongoose';
 import { ENV } from './env';
 
-let isConnected = false;
+let cachedConnection: Promise<typeof mongoose> | null = null;
 
 export async function connectDB() {
-  if (isConnected) {
-    console.log('✅ MongoDB already connected');
-    return;
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  if (!cachedConnection) {
+    cachedConnection = mongoose.connect(ENV.MONGODB_URI);
   }
 
   try {
-    const conn = await mongoose.connect(ENV.MONGODB_URI);
-    isConnected = true;
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    await cachedConnection;
+    console.log(`✅ MongoDB Connected: ${mongoose.connection.host}`);
+    return mongoose.connection;
   } catch (error) {
+    cachedConnection = null; // reset so next request can retry
     console.error('❌ MongoDB connection error:', error);
-    process.exit(1);
+    throw error;
   }
 }
 
 export async function disconnectDB() {
-  if (isConnected) {
+  if (mongoose.connection.readyState !== 0) {
     await mongoose.disconnect();
-    isConnected = false;
+    cachedConnection = null;
     console.log('✅ MongoDB disconnected');
   }
 }

@@ -2,6 +2,7 @@ import cors from 'cors';
 
 const allowedOrigins = [
   'http://localhost:5173',
+   'https://move-and-groove-client.vercel.app',
 ];
 
 export const corsMiddleware = cors({
